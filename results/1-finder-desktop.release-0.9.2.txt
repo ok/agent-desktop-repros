@@ -1,0 +1,13 @@
+# Finder desktop focused -> global window inventory times out
+agent-desktop: ~/Code/agent-desktop-repros/bin/release-0.9.2/agent-desktop (0.9.2), macOS 15.7.9
+
+precondition: Finder frontmost=true, Finder AXFocusedWindow role=AXScrollArea
+
+$ agent-desktop list-windows
+  -> TIMEOUT: CoreGraphics window inventory did not stabilize before the deadline  (5007 ms)
+$ agent-desktop snapshot --window-id w-117328 -i
+  -> TIMEOUT: CoreGraphics window inventory did not stabilize before the deadline  (3066 ms)
+$ agent-desktop screenshot /tmp/ad-repro-1-82942.png --window-id w-117328
+  -> TIMEOUT: CoreGraphics window inventory did not stabilize before the deadline  (5076 ms)
+
+RESULT: BUG REPRODUCED — all three commands succeed while the desktop is focused

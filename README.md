@@ -39,7 +39,7 @@ AD=/path/to/agent-desktop node repro/3-electron-activation.mjs
 ```
 
 `AD` defaults to `agent-desktop` on `PATH`. `./run-evidence.sh` runs all three against the
-installed release and every build under `bin/<label>/`, writing `results/<repro>.<label>.txt`.
+`agent-desktop` on `PATH` (label `installed`) and every build under `bin/<label>/`, writing `results/<repro>.<label>.txt`.
 
 Repro 1 activates Finder and focuses its desktop through the accessibility API (no clicks), then
 restores the previously frontmost app. Repro 2 and 3 launch fixture windows and close them.
@@ -50,6 +50,7 @@ macOS 15.7.9 (arm64), Electron 44.4.5. Full output in `results/`.
 
 | Build | 1 Finder desktop | 2 press, two instances | 3 stock Electron |
 |---|---|---|---|
+| 0.9.2 release | reproduced | reproduced | works |
 | 0.9.4 release (npm) | reproduced | reproduced | reproduced |
 | `main` @ dcfeb737 | reproduced | reproduced | reproduced |
 | `fix/finder-desktop-focus` | **fixed** | reproduced | reproduced |
@@ -57,4 +58,5 @@ macOS 15.7.9 (arm64), Electron 44.4.5. Full output in `results/`.
 | `fix/electron-manual-accessibility` | reproduced | reproduced | **fixed** |
 | all three merged | **fixed** | **fixed** | **fixed** |
 
-Each fix changes only its own row, and the three merge cleanly.
+Problem 3 is a regression: 0.9.2 (and 0.8.1) snapshot all three modes. Each fix changes only its
+own column, and the three merge cleanly.

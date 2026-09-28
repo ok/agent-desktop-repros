@@ -5,7 +5,7 @@ set -u
 cd "$(dirname "$0")"
 out=results
 mkdir -p "$out"
-labels=("released:$(command -v agent-desktop)")
+labels=("installed:$(command -v agent-desktop)")
 for d in bin/*/; do labels+=("$(basename "$d"):$PWD/${d}agent-desktop"); done
 for entry in "${labels[@]}"; do
   label=${entry%%:*}; bin=${entry#*:}
