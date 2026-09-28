@@ -1,0 +1,13 @@
+# Finder desktop focused -> global window inventory times out
+agent-desktop: ~/Code/agent-desktop-repros/bin/feat-press-window-id/agent-desktop (0.9.4), macOS 15.7.9
+
+precondition: Finder frontmost=true, Finder AXFocusedWindow role=AXScrollArea
+
+$ agent-desktop list-windows
+  -> TIMEOUT: NSWorkspace app inventory timed out  (5010 ms)
+$ agent-desktop snapshot --window-id w-116997 -i
+  -> TIMEOUT: NSWorkspace app inventory timed out  (3074 ms)
+$ agent-desktop screenshot /tmp/ad-repro-1-76597.png --window-id w-116997
+  -> TIMEOUT: NSWorkspace app inventory timed out  (5071 ms)
+
+RESULT: BUG REPRODUCED — all three commands succeed while the desktop is focused

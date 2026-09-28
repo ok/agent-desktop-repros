@@ -1,0 +1,13 @@
+# Finder desktop focused -> global window inventory times out
+agent-desktop: ~/Code/agent-desktop-repros/bin/fix-finder-desktop-focus/agent-desktop (0.9.4), macOS 15.7.9
+
+precondition: Finder frontmost=true, Finder AXFocusedWindow role=AXScrollArea
+
+$ agent-desktop list-windows
+  -> ok  (530 ms)
+$ agent-desktop snapshot --window-id w-117122 -i
+  -> ok  (639 ms)
+$ agent-desktop screenshot /tmp/ad-repro-1-78186.png --window-id w-117122
+  -> ok  (669 ms)
+
+RESULT: NOT REPRODUCED (behaves as expected) — all three commands succeed while the desktop is focused

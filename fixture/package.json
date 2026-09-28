@@ -1,0 +1,8 @@
+{
+  "name": "agent-desktop-repro-fixture",
+  "private": true,
+  "main": "main.cjs",
+  "devDependencies": {
+    "electron": "44.4.5"
+  }
+}

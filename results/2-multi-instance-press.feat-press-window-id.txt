@@ -1,0 +1,15 @@
+# press cannot target one of two instances of the same app
+agent-desktop: ~/Code/agent-desktop-repros/bin/feat-press-window-id/agent-desktop (0.9.4), macOS 15.7.9
+
+two instances: Alpha pid 77017 w-117008, Beta pid 77105 w-117017
+
+$ agent-desktop press --app Electron cmd+k
+  -> AMBIGUOUS_TARGET: Multiple application instances matched 'Electron'  (125 ms)
+$ agent-desktop press --window-id w-117017 cmd+k
+  -> ok  (726 ms)
+  Beta received the shortcut: true; Alpha untouched: true
+$ agent-desktop press --app Electron --window-id w-117008 cmd+k
+  -> ok  (184 ms)
+  Alpha received the shortcut: true
+
+RESULT: NOT REPRODUCED (behaves as expected) — press reaches exactly the instance whose window was named
