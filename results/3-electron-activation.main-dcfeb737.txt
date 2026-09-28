@@ -2,15 +2,15 @@
 agent-desktop: ~/Code/agent-desktop-repros/bin/main-dcfeb737/agent-desktop (0.9.4), macOS 15.7.9
 
 $ agent-desktop snapshot (app enables accessibility via: none)
-  -> ACTION_FAILED: Renderer accessibility activation was not reflected in the attribute value  (155 ms)
+  -> ACTION_FAILED: Renderer accessibility activation was not reflected in the attribute value  (182 ms)
   page content visible: false
 
 $ agent-desktop snapshot (app enables accessibility via: switch)
-  -> ACTION_FAILED: Renderer accessibility activation was not reflected in the attribute value  (129 ms)
+  -> ACTION_FAILED: Renderer accessibility activation was not reflected in the attribute value  (144 ms)
   page content visible: false
 
 $ agent-desktop snapshot (app enables accessibility via: api)
-  -> ok  (201 ms)
+  -> ok  (174 ms)
   page content visible: true
 
 none   = stock app, nothing enabled (what every shipped Electron app looks like)

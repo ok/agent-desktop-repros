@@ -53,10 +53,12 @@ macOS 15.7.9 (arm64), Electron 44.4.5. Full output in `results/`.
 | 0.9.2 release | reproduced | reproduced | works |
 | 0.9.4 release (npm) | reproduced | reproduced | reproduced |
 | `main` @ dcfeb737 | reproduced | reproduced | reproduced |
-| `fix/finder-desktop-focus` | **fixed** | reproduced | reproduced |
-| `feat/press-window-id` | reproduced | **fixed** | reproduced |
-| `fix/electron-manual-accessibility` | reproduced | reproduced | **fixed** |
-| all three merged | **fixed** | **fixed** | **fixed** |
+| `main` @ b8d538c0 | reproduced | reproduced | works (fixed upstream in #234) |
+| `fix/finder-desktop-focus` (on b8d538c0) | **fixed** | reproduced | works |
+| `feat/press-window-id` (on b8d538c0) | reproduced | **fixed** | works |
 
-Problem 3 is a regression: 0.9.2 (and 0.8.1) snapshot all three modes. Each fix changes only its
-own column, and the three merge cleanly.
+Problem 3 was a regression in 0.9.4 (0.9.2 and 0.8.1 snapshot all three modes); upstream fixed it
+in #234 (b8d538c0). Each remaining fix changes only its own column.
+
+Repro 2 uses `--headed`: since #234 a menu shortcut is performed only for a headed `press`, which
+first focuses the target's exact window — the focus `--window-id` has to put on the right instance.

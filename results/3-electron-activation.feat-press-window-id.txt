@@ -2,19 +2,19 @@
 agent-desktop: ~/Code/agent-desktop-repros/bin/feat-press-window-id/agent-desktop (0.9.4), macOS 15.7.9
 
 $ agent-desktop snapshot (app enables accessibility via: none)
-  -> ACTION_FAILED: Renderer accessibility activation was not reflected in the attribute value  (162 ms)
-  page content visible: false
+  -> ok  (2291 ms)
+  page content visible: true
 
 $ agent-desktop snapshot (app enables accessibility via: switch)
-  -> ACTION_FAILED: Renderer accessibility activation was not reflected in the attribute value  (158 ms)
-  page content visible: false
+  -> ok  (220 ms)
+  page content visible: true
 
 $ agent-desktop snapshot (app enables accessibility via: api)
-  -> ok  (215 ms)
+  -> ok  (201 ms)
   page content visible: true
 
 none   = stock app, nothing enabled (what every shipped Electron app looks like)
 switch = --force-renderer-accessibility
 api    = app.setAccessibilitySupportEnabled(true) (the only mode Electron reports as enabled)
 
-RESULT: BUG REPRODUCED — every mode yields the page content
+RESULT: NOT REPRODUCED (behaves as expected) — every mode yields the page content

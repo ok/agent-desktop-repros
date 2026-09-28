@@ -1,16 +1,16 @@
 # stock Electron: snapshot fails on the AXManualAccessibility read-back
-agent-desktop: ~/Code/agent-desktop-repros/bin/fix-electron-manual-accessibility/agent-desktop (0.9.4), macOS 15.7.9
+agent-desktop: ~/Code/agent-desktop-repros/bin/main-b8d538c0/agent-desktop (0.9.4), macOS 15.7.9
 
 $ agent-desktop snapshot (app enables accessibility via: none)
-  -> ok  (2287 ms)
+  -> ok  (2292 ms)
   page content visible: true
 
 $ agent-desktop snapshot (app enables accessibility via: switch)
-  -> ok  (158 ms)
+  -> ok  (175 ms)
   page content visible: true
 
 $ agent-desktop snapshot (app enables accessibility via: api)
-  -> ok  (157 ms)
+  -> ok  (156 ms)
   page content visible: true
 
 none   = stock app, nothing enabled (what every shipped Electron app looks like)

@@ -2,15 +2,15 @@
 agent-desktop: ~/Code/agent-desktop-repros/bin/release-0.9.2/agent-desktop (0.9.2), macOS 15.7.9
 
 $ agent-desktop snapshot (app enables accessibility via: none)
-  -> ok  (2280 ms)
+  -> ok  (2281 ms)
   page content visible: true
 
 $ agent-desktop snapshot (app enables accessibility via: switch)
-  -> ok  (179 ms)
+  -> ok  (168 ms)
   page content visible: true
 
 $ agent-desktop snapshot (app enables accessibility via: api)
-  -> ok  (180 ms)
+  -> ok  (165 ms)
   page content visible: true
 
 none   = stock app, nothing enabled (what every shipped Electron app looks like)

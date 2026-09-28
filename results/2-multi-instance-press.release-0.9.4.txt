@@ -1,14 +1,14 @@
 # press cannot target one of two instances of the same app
 agent-desktop: ~/.local/bin/agent-desktop (0.9.4), macOS 15.7.9
 
-two instances: Alpha pid 75511 w-116878, Beta pid 75567 w-116887
+two instances: Alpha pid 95196 w-118788, Beta pid 95236 w-118797
 
-$ agent-desktop press --app Electron cmd+k
-  -> AMBIGUOUS_TARGET: Multiple application instances matched 'Electron'  (144 ms)
-$ agent-desktop press --window-id w-116887 cmd+k
-  -> INVALID_ARGS: error: unexpected argument '--window-id' found  (3 ms)
+$ agent-desktop --headed press --app Electron cmd+k
+  -> AMBIGUOUS_TARGET: Multiple application instances matched 'Electron'  (178 ms)
+$ agent-desktop --headed press --window-id w-118797 cmd+k
+  -> INVALID_ARGS: error: unexpected argument '--window-id' found  (5 ms)
   Beta received the shortcut: false; Alpha untouched: true
-$ agent-desktop press --app Electron --window-id w-116878 cmd+k
+$ agent-desktop --headed press --app Electron --window-id w-118788 cmd+k
   -> INVALID_ARGS: error: unexpected argument '--window-id' found  (4 ms)
   Alpha received the shortcut: false
 

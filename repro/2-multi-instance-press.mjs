@@ -1,5 +1,7 @@
 // Issue 2: `press` selects its target by app name only, so with two instances of one app (two
 // Electron dev builds, two browser profiles) it cannot be aimed at either of them.
+// --headed: since upstream #234 a menu shortcut is performed only for headed press, which focuses
+// the target's exact window first; that focus is what has to land on the right instance.
 import { ad, header, show, launchFixture, stopFixtures, flatText, verdict } from './lib.mjs'
 
 header('press cannot target one of two instances of the same app')
@@ -9,16 +11,16 @@ const heading = (w) => flatText(ad('snapshot', '--app', 'Electron', '--window-id
 
 try {
   console.log(`two instances: Alpha pid ${a.pid} ${a.windowId}, Beta pid ${b.pid} ${b.windowId}\n`)
-  show('press --app Electron cmd+k', ad('press', '--app', 'Electron', 'cmd+k'))
+  show('--headed press --app Electron cmd+k', ad('--headed', 'press', '--app', 'Electron', 'cmd+k'))
 
-  const aimed = ad('press', '--window-id', b.windowId, 'cmd+k')
-  show(`press --window-id ${b.windowId} cmd+k`, aimed)
+  const aimed = ad('--headed', 'press', '--window-id', b.windowId, 'cmd+k')
+  show(`--headed press --window-id ${b.windowId} cmd+k`, aimed)
   const betaMarked = heading(b).includes('Beta marked')
   const alphaUntouched = !heading(a).includes('Alpha marked')
   console.log(`  Beta received the shortcut: ${betaMarked}; Alpha untouched: ${alphaUntouched}`)
 
-  const scoped = ad('press', '--app', 'Electron', '--window-id', a.windowId, 'cmd+k')
-  show(`press --app Electron --window-id ${a.windowId} cmd+k`, scoped)
+  const scoped = ad('--headed', 'press', '--app', 'Electron', '--window-id', a.windowId, 'cmd+k')
+  show(`--headed press --app Electron --window-id ${a.windowId} cmd+k`, scoped)
   const alphaMarked = heading(a).includes('Alpha marked')
   console.log(`  Alpha received the shortcut: ${alphaMarked}`)
 
