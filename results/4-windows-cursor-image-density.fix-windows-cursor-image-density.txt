@@ -1,0 +1,20 @@
+agent-desktop: agent-desktop 1.3.1
+Windows: Microsoft Windows 11 Pro 10.0.26200
+$ agent-desktop session start --name repro4
+{"version":"2.6","ok":true,"command":"session","data":{"activation":{"environment":"AGENT_DESKTOP_SESSION","value":"run-1794689275400-15104-0"},"artifacts":"events","created_at":1794689275403,"name":"repro4","next":"$env:AGENT_DESKTOP_SESSION = 'run-1794689275400-15104-0'","session_id":"run-1794689275400-15104-0","trace":"on"}}
+magenta on screen before the overlay: 0 px
+$ agent-desktop cursor-overlay enable --image C:\Users\mirall\ad-repros\fixture\cursor\magenta-64px.png
+{"version":"2.6","ok":true,"command":"cursor-overlay","data":{"activation":{"environment":"AGENT_DESKTOP_SESSION","value":"run-1794689275400-15104-0"},"cursor_overlay":{"enabled":true,"max_words":6,"style":{"accent":"#4299FF","highlight":true,"images":{"arrow":{"path":"\\\\?\\C:\\Users\\Mirall\\ad-repros\\fixture\\cursor\\magenta-64px.png"}},"rim":"#111318","ripple":true,"size":1.0}},"next":"$env:AGENT_DESKTOP_SESSION = 'run-1794689275400-15104-0'","rendered":true,"session_id":"run-1794689275400-15104-0"}}
+magenta-64px.png is drawn 64 px wide
+$ agent-desktop cursor-overlay disable
+{"version":"2.6","ok":true,"command":"cursor-overlay","data":{"cursor_overlay":{"enabled":false,"max_words":6,"style":{"accent":"#4299FF","highlight":true,"rim":"#111318","ripple":true,"size":1.0}},"session_id":"run-1794689275400-15104-0"}}
+$ agent-desktop cursor-overlay enable --image C:\Users\mirall\ad-repros\fixture\cursor\magenta-64px-288dpi.png
+{"version":"2.6","ok":true,"command":"cursor-overlay","data":{"activation":{"environment":"AGENT_DESKTOP_SESSION","value":"run-1794689275400-15104-0"},"cursor_overlay":{"enabled":true,"max_words":6,"style":{"accent":"#4299FF","highlight":true,"images":{"arrow":{"path":"\\\\?\\C:\\Users\\Mirall\\ad-repros\\fixture\\cursor\\magenta-64px-288dpi.png"}},"rim":"#111318","ripple":true,"size":1.0}},"next":"$env:AGENT_DESKTOP_SESSION = 'run-1794689275400-15104-0'","rendered":true,"session_id":"run-1794689275400-15104-0"}}
+magenta-64px-288dpi.png is drawn 16 px wide
+$ agent-desktop cursor-overlay disable
+{"version":"2.6","ok":true,"command":"cursor-overlay","data":{"cursor_overlay":{"enabled":false,"max_words":6,"style":{"accent":"#4299FF","highlight":true,"rim":"#111318","ripple":true,"size":1.0}},"session_id":"run-1794689275400-15104-0"}}
+$ agent-desktop session end
+{"version":"2.6","ok":true,"command":"session","data":{"ended_at":1794689281250,"session_id":"run-1794689275400-15104-0"}}
+the 288 dpi image is 0.25 times as wide as the same pixels without a density (expected 0.25)
+RESULT: NOT REPRODUCED
+exit code: 0

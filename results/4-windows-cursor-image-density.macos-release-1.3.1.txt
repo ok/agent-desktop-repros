@@ -1,0 +1,9 @@
+Reference measurement on macOS, for comparison with the Windows results of repro 4.
+agent-desktop 1.3.1 (release), macOS, 2x display.
+
+$ agent-desktop cursor-overlay enable --image fixture/cursor/magenta-64px.png
+screenshot: the square is 128 px wide = 64 points
+$ agent-desktop cursor-overlay enable --image fixture/cursor/magenta-64px-288dpi.png
+screenshot: the square is 32 px wide = 16 points
+
+macOS draws the 288 dpi image a quarter as wide as the same pixels without a density.

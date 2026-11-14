@@ -1,6 +1,6 @@
 # agent-desktop repros
 
-Minimal, self-contained reproductions for three [agent-desktop](https://github.com/lahfir/agent-desktop)
+Minimal, self-contained reproductions for four [agent-desktop](https://github.com/vercel-labs/agent-desktop)
 problems, each runnable against any build so the same script shows the bug on the current release
 and its absence on the proposed fix.
 
@@ -9,6 +9,7 @@ and its absence on the proposed fix.
 | 1 | While Finder's desktop has focus, every command that builds the global window inventory times out (`list-windows`, `snapshot --window-id`, `screenshot --window-id`) | `repro/1-finder-desktop.mjs` |
 | 2 | `press` selects its target by application name only, so with two running instances of one app it cannot be aimed at either | `repro/2-multi-instance-press.mjs` |
 | 3 | 0.9 cannot snapshot a stock Electron app: Electron reads `AXManualAccessibility` back as false even while its accessibility tree is live | `repro/3-electron-activation.mjs` |
+| 4 | Windows draws a cursor image by its pixel count and ignores the density its PNG records, so 2x or 4x artwork is two or four times larger than on macOS | `repro/4-windows-cursor-image-density.ps1` |
 
 Each script prints the exact commands, their envelopes and timings, and ends with
 `RESULT: BUG REPRODUCED` (exit 1) or `RESULT: NOT REPRODUCED` (exit 0).
@@ -62,3 +63,26 @@ in #234 (b8d538c0). Each remaining fix changes only its own column.
 
 Repro 2 uses `--headed`: since #234 a menu shortcut is performed only for a headed `press`, which
 first focuses the target's exact window — the focus `--window-id` has to put on the right instance.
+
+## Repro 4: cursor image density on Windows
+
+`fixture/cursor/` holds two PNGs with the same 64x64 magenta square. `magenta-64px.png` records no
+density. `magenta-64px-288dpi.png` records 288 dpi in its `pHYs` chunk, so it is a 16x16 point
+image. The script enables the cursor overlay with each, takes a screenshot, and measures how wide
+the square is on screen.
+
+Run it in PowerShell on the logged-in Windows desktop, with nothing magenta on screen. The
+executable must be named `agent-desktop.exe`.
+
+```powershell
+$env:AD = 'C:\path\to\agent-desktop.exe'
+powershell -ExecutionPolicy Bypass -File repro\4-windows-cursor-image-density.ps1
+```
+
+Windows 11 Pro 10.0.26200 (x64). Full output in `results/`.
+
+| Build | 64 px, no density | 64 px at 288 dpi | Result |
+|---|---|---|---|
+| 1.3.1 release, Windows | 64 px | 64 px | reproduced |
+| `fix/windows-cursor-image-density` (on 46d2adf8), Windows | 64 px | 16 px | **fixed** |
+| 1.3.1 release, macOS (2x display), for reference | 128 px = 64 pt | 32 px = 16 pt | macOS honors the density |
